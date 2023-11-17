@@ -1,4 +1,14 @@
-def analyze_weather_data(data, analysis_type):    
+def analyze_weather_data(data, analysis_type):
+    # Check if the parameters are of the correct type
+    if not isinstance(data, list):
+        raise TypeError("The data parameter must be a list!")
+    if not isinstance(analysis_type, str):
+        raise TypeError("The analysis_type parameter must be a string!")
+    if analysis_type not in ["average", "max", "min", "trend"]:
+        raise ValueError("The analysis_type parameter must be one of 'average', 'max', 'min', or 'trend'!")
+    if not data:
+        raise ValueError("The data parameter must not be empty!")
+    
     # Check if all dictionaries have the required keys
     required_keys = {"date", "temperature", "humidity", "wind_speed"}
     for item in data:
