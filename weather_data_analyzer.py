@@ -1,4 +1,11 @@
 def analyze_weather_data(data, analysis_type):
+    """
+    Analyzes weather data and returns the result as a dictionary.
+    :param data: A list of dictionaries containing weather data.
+    :param analysis_type: The type of analysis to perform. Must be one of 'average', 'max', 'min', or 'trend'.
+    :return: The result of the analysis.
+    """
+
     # Check if the parameters are of the correct type
     if not isinstance(data, list):
         raise TypeError("The data parameter must be a list!")
@@ -14,7 +21,6 @@ def analyze_weather_data(data, analysis_type):
     for item in data:
         if not all(key in item for key in required_keys):
             raise ValueError("The data parameter must be a list of dictionaries with the keys 'date', 'temperature', 'humidity', and 'wind_speed'!")
-
     
     if analysis_type == "average":
         total_temp = sum(item['temperature'] for item in data)
