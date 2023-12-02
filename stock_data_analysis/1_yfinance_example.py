@@ -8,7 +8,7 @@ with open("sp500-ticker-list.txt") as f:
 pathlib.Path("data").mkdir(exist_ok=True)
 
 for stock in ["^DJI"] + stock_list:
-    data = yf.download(stock, start="2009-01-01", end="2022-12-31")
+    data = yf.download(stock, start="2010-01-01")
     data.to_csv(f"data/{stock}.csv")
 
 print("Done!")
