@@ -2,6 +2,7 @@ import glob
 import pathlib
 
 import numpy as np
+import yfinance
 
 # load stock data
 stock_files = glob.glob("data/*.csv")
@@ -30,5 +31,12 @@ for i in range(len(correlation_matrix)):
 
 stock_names = list(stock_data.keys())
 stock_1, stock_2 = stock_names[min_correlation_index[0]], stock_names[min_correlation_index[1]]
-print(f"Stocks with smallest correlation: {stock_1} and {stock_2}")
+
+# get stock names
+stock_1_name = yfinance.Ticker(stock_1).info["longName"]
+stock_2_name = yfinance.Ticker(stock_2).info["longName"]
+
+print(
+    f"Stocks with smallest correlation: {stock_1} ({stock_1_name}) and {stock_2} ({stock_2_name})"
+)
 print("Done!")
