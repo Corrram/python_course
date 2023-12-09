@@ -1,52 +1,51 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-stock1 = "ATVI"
-stock2 = "LUMN"
-filepath1 = f"data/{stock1}.csv"
-filepath2 = f"data/{stock2}.csv"
-values1 = np.loadtxt(filepath1, delimiter=",", skiprows=1, usecols=4)
-values2 = np.loadtxt(filepath2, delimiter=",", skiprows=1, usecols=4)
 
-# calculate variance and mean of stock 1
-stock1_variance = values1.var()
-stock1_mean = values1.mean()
-print(f"{stock1} variance: {stock1_variance}")
-print(f"{stock1} mean: {stock1_mean}")
+def print_mean_and_variance(**kwargs):
+    for k, v in kwargs.items():
+        variance = v.var()
+        mean = v.mean()
+        print(f"{k} variance: {variance}")
+        print(f"{k} mean: {mean}")
+
 
 # calculate variance and mean of stock 2
-stock2_variance = values2.var()
-stock2_mean = values2.mean()
-print(f"{stock2} variance: {stock2_variance}")
-print(f"{stock2} mean: {stock2_mean}")
+def plot_prices(**kwargs):
+    for k, v in kwargs.items():
+        plt.plot(v, label=k)
+    plt.legend()
+    plt.grid()
+    plt.xlabel("Time")
+    plt.ylabel("Value")
+    plt.show()
+    plt.close()
 
-# calculate correlation
-correlation_matrix = np.corrcoef(values1, values2)
-correlation = correlation_matrix[0, 1]
-print(f"Correlation: {correlation}")
 
-# plot the returns
-plt.plot(values1, label=stock1)
-plt.plot(values2, label=stock2)
-plt.legend()
-plt.grid()
-plt.xlabel("Time")
-plt.ylabel("Value")
-plt.show()
+def load_stock_returns(company):
+    filepath = f"data/{company}.csv"
+    return np.loadtxt(filepath, delimiter=",", skiprows=1, usecols=4)
 
-# plot joint portfolio
-portfolio = (values1 + values2) / 2
-plt.plot(portfolio, label="Portfolio")
-plt.legend()
-plt.grid()
-plt.xlabel("Time")
-plt.ylabel("Value")
-plt.show()
 
-# calculate variance and mean of portfolio
-portfolio_variance = portfolio.var()
-portfolio_mean = portfolio.mean()
-print(f"Portfolio variance: {portfolio_variance}")
-print(f"Portfolio mean: {portfolio_mean}")
+if __name__ == "__main__":
+    stock1 = "ATVI"
+    stock2 = "LUMN"
+    values1 = load_stock_returns(stock1)
+    values2 = load_stock_returns(stock2)
 
-print("Done!")
+    # calculate correlation
+    correlation_matrix = np.corrcoef(values1, values2)
+    correlation = correlation_matrix[0, 1]
+    print(f"Correlation: {correlation}")
+
+    print_mean_and_variance(**{stock1: values1, stock2: values2})
+    # plot the returns
+    plot_prices(**{stock1: values1, stock2: values2})
+
+    # plot joint portfolio
+    portfolio = (values1 + values2) / 2
+    plot_prices(**{stock1: values1, stock2: values2, "Portfolio": portfolio})
+
+    # calculate variance and mean of portfolio
+    print_mean_and_variance(**{"Portfolio": portfolio})
+    print("Done!")

@@ -45,6 +45,6 @@ def download_stock_data(tickers=None):
 
 
 if __name__ == "__main__":
-    sp500_tickers = fetch_sp500_tickers()
-    download_stock_data(sp500_tickers)
+    # sp500_tickers = fetch_sp500_tickers()
+    download_stock_data("SPYI")
     print("Done!")
