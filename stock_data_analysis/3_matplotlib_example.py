@@ -22,19 +22,21 @@ def plot_prices(**kwargs):
     plt.close()
 
 
-def load_stock_returns(company):
+def load_stock_values(company):
     filepath = f"data/{company}.csv"
     return np.loadtxt(filepath, delimiter=",", skiprows=1, usecols=4)
 
 
 if __name__ == "__main__":
     stock1 = "ATVI"
-    stock2 = "LUMN"
-    values1 = load_stock_returns(stock1)
-    values2 = load_stock_returns(stock2)
+    stock2 = "GPS"
+    values1 = load_stock_values(stock1)
+    values2 = load_stock_values(stock2)
 
     # calculate correlation
-    correlation_matrix = np.corrcoef(values1, values2)
+    returns1 = values1[1:] / values1[:-1] - 1
+    returns2 = values2[1:] / values2[:-1] - 1
+    correlation_matrix = np.corrcoef(returns1, returns2)
     correlation = correlation_matrix[0, 1]
     print(f"Correlation: {correlation}")
 
