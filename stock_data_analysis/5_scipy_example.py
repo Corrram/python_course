@@ -1,4 +1,3 @@
-import pandas as pd
 from scipy import stats
 
 pandas_example = __import__("stock_data_analysis.4_pandas_example", fromlist=["load_stock_prices"])

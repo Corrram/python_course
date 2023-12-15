@@ -4,7 +4,7 @@ import statsmodels.api as sm
 pandas_example = __import__("stock_data_analysis.4_pandas_example", fromlist=["load_stock_prices"])
 
 # Load your data (replace these lines with your actual data loading code)
-stock_returns = pandas_example.load_stock_prices("ATVI")["Close"].pct_change().dropna()
+stock_returns = pandas_example.load_stock_prices("AAPL")["Close"].pct_change().dropna()
 market_returns = pandas_example.load_stock_prices("^DJI")["Close"].pct_change().dropna()
 
 # Aligning the data

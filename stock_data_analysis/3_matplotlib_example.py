@@ -28,12 +28,12 @@ def load_stock_values(company):
 
 
 if __name__ == "__main__":
-    stock1 = "ATVI"
-    stock2 = "GPS"
+    stock1 = "APA"
+    stock2 = "CLX"
     values1 = load_stock_values(stock1)
     values2 = load_stock_values(stock2)
 
-    # calculate correlation
+    # calculate correlation of daily returns
     returns1 = values1[1:] / values1[:-1] - 1
     returns2 = values2[1:] / values2[:-1] - 1
     correlation_matrix = np.corrcoef(returns1, returns2)
