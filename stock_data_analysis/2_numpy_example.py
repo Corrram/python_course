@@ -15,13 +15,19 @@ stock_files = glob.glob("data/*.csv")
 stock_data = {}
 for stock_file in stock_files:
     stock_name = pathlib.Path(stock_file).stem
-    stock_data[stock_name] = np.loadtxt(stock_file, delimiter=",", skiprows=1, usecols=4)
+    stock_data[stock_name] = np.loadtxt(
+        stock_file, delimiter=",", skiprows=1, usecols=4
+    )
     # calculate daily returns from absolute prices
-    stock_data[stock_name] = stock_data[stock_name][1:] / stock_data[stock_name][:-1] - 1
+    stock_data[stock_name] = (
+        stock_data[stock_name][1:] / stock_data[stock_name][:-1] - 1
+    )
 
 # keep only stocks with more all data points
 max_data_len = max(len(data) for data in stock_data.values())
-stock_data = {name: data for name, data in stock_data.items() if len(data) == max_data_len}
+stock_data = {
+    name: data for name, data in stock_data.items() if len(data) == max_data_len
+}
 
 # calculate correlation matrix
 stock_prices = list(stock_data.values())
@@ -37,7 +43,10 @@ for i in range(len(correlation_matrix)):
             min_correlation_index = (i, j)
 
 stock_names = list(stock_data.keys())
-stock_1, stock_2 = stock_names[min_correlation_index[0]], stock_names[min_correlation_index[1]]
+stock_1, stock_2 = (
+    stock_names[min_correlation_index[0]],
+    stock_names[min_correlation_index[1]],
+)
 
 
 # get stock names

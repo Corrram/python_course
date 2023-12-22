@@ -1,5 +1,7 @@
 import pandas as pd
 import statsmodels.api as sm
+import matplotlib.pyplot as plt
+
 
 pandas_example = __import__("stock_data_analysis.4_pandas_example", fromlist=["load_stock_prices"])
 
@@ -18,3 +20,11 @@ results = model.fit()
 
 # Output the results
 print(results.summary())
+
+# visualize the plot
+plt.scatter(aligned_data["Market_Returns"], aligned_data["Stock_Returns"])
+plt.plot(aligned_data["Market_Returns"], results.fittedvalues)
+plt.xlabel("Market Returns")
+plt.ylabel("Stock Returns")
+plt.show()
+
