@@ -8,17 +8,17 @@ Created on Mon Oct 14 09:38:34 2021
 import numpy as np
 import matplotlib.pyplot as plt
 from math import log
+
+import pathlib
 import scipy.optimize
 
 
 # Length of iteration:
 T = 300
 # Do you want to see the plots?
-show_plots = "yes"
-# show_plots = 'no'
+show_plots = True
 # Do you want to save the figures?
-# save_figs = 'yes'
-save_figs = "no"
+save_figs = False
 
 ##############################################################################
 # A. Model parameters
@@ -225,7 +225,9 @@ for t in range(T + 1):
 ##############################################################################
 # H. Post-processing
 ##############################################################################
-if show_plots == "yes":
+if show_plots:
+    if save_figs:
+        pathlib.Path("figures").mkdir(exist_ok=True)
     T_1 = 25
     g_L_line = [g_L * 100] * T
     g_N_line = [g_N * 100] * T
@@ -233,129 +235,122 @@ if show_plots == "yes":
     zero_line = [0] * T
 
     print("Production factors:")
-    plt.plot(L_series[0:T_1], "bo", linewidth=1, linestyle="-", label="$L_t$")
-    plt.plot(K_series[0:T_1], "ro", linewidth=1, linestyle="-", label="$K_t$")
+    plt.plot(L_series[0:T_1], "bo", linestyle="-", label="$L_t$")
+    plt.plot(K_series[0:T_1], "ro", linestyle="-", label="$K_t$")
     plt.xlabel("Period $t$")
     plt.ylabel("Production factors")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_factors.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_factors.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Factor growth:")
-    plt.plot(g_L_line[1:T_1], "bo", linewidth=1, linestyle="-", label="$g_{L}$")
-    plt.plot(g_K_series[1:T_1], "ro", linewidth=1, linestyle="-", label="$g_{K,t}$")
+    plt.plot(g_L_line[1:T_1], "bo", linestyle="-", label="$g_{L}$")
+    plt.plot(g_K_series[1:T_1], "ro", linestyle="-", label="$g_{K,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Growth rates of production factors in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig(
-            "../MySlides/figures/Solow_factor_growth.eps", format="eps", dpi=1000
-        )
+    if save_figs:
+        plt.savefig("figures/Solow_factor_growth.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Level of GDP:")
-    plt.plot(Y_series[0:T_1], "mo", linewidth=1, linestyle="-", label="$Y_t$")
+    plt.plot(Y_series[0:T_1], "mo", linestyle="-", label="$Y_t$")
     plt.xlabel("Period $t$")
     plt.ylabel("Real GDP")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_output.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_output.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Real GDP growth:")
-    plt.plot(g_L_line[1:T_1], "bo", linewidth=1, linestyle="--", label="$g_L$")
-    plt.plot(g_Y_series[1:T_1], "mo", linewidth=1, linestyle="-", label="$g_{Y,t}$")
+    plt.plot(g_L_line[1:T_1], "bo", linestyle="--", label="$g_L$")
+    plt.plot(g_Y_series[1:T_1], "mo", linestyle="-", label="$g_{Y,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Real GDP growth in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig(
-            "../MySlides/figures/Solow_output_growth.eps", format="eps", dpi=1000
-        )
+    if save_figs:
+        plt.savefig("figures/Solow_output_growth.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Capital-labor ratio:")
-    plt.plot(k_series[0:T_1], "ro", linewidth=1, linestyle="-", label="$k_t$")
+    plt.plot(k_series[0:T_1], "ro", linestyle="-", label="$k_t$")
     plt.xlabel("Period $t$")
     plt.ylabel("Capital intensity")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_k.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_k.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Growth rate of capital intensity:")
-    plt.plot(zero_line[1:T_1], color="black", linewidth=1, linestyle="--", label="$0$")
-    plt.plot(g_k_series[1:T_1], "ro", linewidth=1, linestyle="-", label="$g_{k,t}$")
+    plt.plot(zero_line[1:T_1], color="black", linestyle="--", label="$0$")
+    plt.plot(g_k_series[1:T_1], "ro", linestyle="-", label="$g_{k,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Growth rate of capital intensity in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_g_k.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_g_k.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Capital per capita:")
-    plt.plot(k_p_series[0:T_1], "bo", linewidth=1, linestyle="-", label="$k_t^p$")
+    plt.plot(k_p_series[0:T_1], "bo", linestyle="-", label="$k_t^p$")
     plt.xlabel("Period $t$")
     plt.ylabel("Capital per capita")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_k_p.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_k_p.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Growth rate of capital per capita:")
-    plt.plot(g_h_line[1:T_1], color="black", linewidth=1, linestyle="--", label="$g_h$")
-    plt.plot(g_k_p_series[1:T_1], "bo", linewidth=1, linestyle="-", label="$g_{k^p,t}$")
+    plt.plot(g_h_line[1:T_1], color="black", linestyle="--", label="$g_h$")
+    plt.plot(g_k_p_series[1:T_1], "bo", linestyle="-", label="$g_{k^p,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Growth rate of capital per capita in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_g_k_p.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_g_k_p.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Level of labor productivity:")
-    plt.plot(y_series[0:T_1], "mo", linewidth=1, linestyle="-", label="$y_t$")
+    plt.plot(y_series[0:T_1], "mo", linestyle="-", label="$y_t$")
     plt.xlabel("Period $t$")
     plt.ylabel("Labor productivity")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_y.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_y.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Growth rate of labor productivity:")
-    plt.plot(zero_line[1:T_1], color="black", linewidth=1, linestyle="--", label="$0$")
-    plt.plot(g_y_series[1:T_1], "mo", linewidth=1, linestyle="-", label="$g_{y,t}$")
+    plt.plot(zero_line[1:T_1], color="black", linestyle="--", label="$0$")
+    plt.plot(g_y_series[1:T_1], "mo", linestyle="-", label="$g_{y,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Growth rate of labor productivity in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_g_y.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_g_y.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Level of real GDP per capita:")
-    plt.plot(y_p_series[0:T_1], "go", linewidth=1, linestyle="-", label="$y^p_t$")
+    plt.plot(y_p_series[0:T_1], "go", linestyle="-", label="$y^p_t$")
     plt.xlabel("Period $t$")
     plt.ylabel("Real GDP per capita")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_y_p.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_y_p.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Growth rate of real GDP per capita:")
-    plt.plot(g_h_line[1:T_1], color="black", linewidth=1, linestyle="--", label="$g_h$")
-    plt.plot(g_y_p_series[1:T_1], "go", linewidth=1, linestyle="-", label="$g_{y^p,t}$")
+    plt.plot(g_h_line[1:T_1], color="black", linestyle="--", label="$g_h$")
+    plt.plot(g_y_p_series[1:T_1], "go", linestyle="-", label="$g_{y^p,t}$")
     plt.xlabel("Period $t$")
     plt.ylabel("Growth rate of real GDP per capita in %")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_g_y_p.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_g_y_p.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Real GDP per capita (log scale):")
-    # plt.plot(log_y_p_trend_series2[0:T_1], color="red", linewidth=1, linestyle="--", label="Trend ($s_1=0.25$)")
-    plt.plot(
-        log_y_p_series[0:T_1], "go", linewidth=1, linestyle="-", label=r"$\log(y_t^p)$"
-    )
+    plt.plot(log_y_p_series[0:T_1], "go", linestyle="-", label=r"$\log(y_t^p)$")
     plt.plot(
         log_y_p_trend_series[0:T_1],
         color="red",
@@ -366,21 +361,19 @@ if show_plots == "yes":
     plt.xlabel("Period $t$")
     plt.ylabel("Real GDP per capita (log scale )")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig("../MySlides/figures/Solow_y_p_log.eps", format="eps", dpi=1000)
+    if save_figs:
+        plt.savefig("figures/Solow_y_p_log.eps", format="eps", dpi=1000)
     plt.show()
 
     print("Time-one map:")
     Range = np.linspace(0.00001, 2 * k_bar, 100000)
     id_map = [x for x in Range]
     G_values = G(Range)
-    plt.plot(Range, G_values, linewidth=1, linestyle="-", color="red", label="$G(k)$")
-    plt.plot(Range, id_map, linewidth=1, linestyle="-", color="black", label="$id(k)$")
+    plt.plot(Range, G_values, linestyle="-", color="red", label="$G(k)$")
+    plt.plot(Range, id_map, linestyle="-", color="black", label="$id(k)$")
     plt.xlabel("$k_t$")
     plt.ylabel("$k_{t+1} = G(k_t)$")
     plt.legend(loc="best")
-    if save_figs == "yes":
-        plt.savefig(
-            "../MySlides/figures/Solow_time_one_map.eps", format="eps", dpi=1000
-        )
+    if save_figs:
+        plt.savefig("figures/Solow_time_one_map.eps", format="eps", dpi=1000)
     plt.show()
