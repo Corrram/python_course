@@ -61,3 +61,4 @@ if __name__ == "__main__":
 
     result = analyze_weather_data(weather_data, "average")
     print(result)
+
