@@ -110,6 +110,6 @@ FROM artists
          JOIN albums USING (ArtistId)
          JOIN tracks USING (AlbumId)
          JOIN invoice_items USING (TrackId)
-GROUP BY TrackId
+GROUP BY ArtistId
 ORDER BY Revenue DESC
 LIMIT 1;
