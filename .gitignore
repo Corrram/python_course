@@ -1,3 +1,11 @@
 /.idea
 /stock_data_analysis/data
 /stock_data_analysis_oop/data/
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.pdf
+*.fls
+*.fdb_latexmk
