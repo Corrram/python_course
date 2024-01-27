@@ -1,7 +1,8 @@
 antlr4-python3-runtime~=4.11
 bs4==0.0.1
+jupyter==1.0.0
 matplotlib==3.8.2
-numba
+numba==0.58.1
 numpy==1.26.2
 openpyxl==3.0.9
 pandas==2.1.4
